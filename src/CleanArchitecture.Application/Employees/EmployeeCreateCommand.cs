@@ -13,7 +13,8 @@ namespace CleanArchitecture.Application.Employees;
         DateOnly BirthOfDate,
         decimal Salary,
         PersonelInformation PersonelInformation,
-        Address? Address):IRequest<Result<string>>;
+        Address? Address,
+        bool IsActive):IRequest<Result<string>>;
 
 public sealed class EmployeeCreateCommandValidator : AbstractValidator<EmployeeCreateCommand>
 {

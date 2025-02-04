@@ -3,12 +3,18 @@ using CleanArchitecture.Infrastructure;
 using CleanArchitecture.WebAPI;
 using CleanArchitecture.WebAPI.Controllers;
 using CleanArchitecture.WebAPI.Modules;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.RateLimiting;
 using Scalar.AspNetCore;
 using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddResponseCompression(opt =>
+{
+    opt.EnableForHttps=true;
+});
 
 builder.AddServiceDefaults();
 builder.Services.AddApplication();
@@ -35,12 +41,24 @@ x.AddFixedWindowLimiter("fixed", cfg =>
 }));
 builder.Services.AddExceptionHandler<ExceptionHandler>().AddProblemDetails();
 
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer();
+builder.Services.AddAuthorization();
+
+//builder.Services.AddKeycloakWebApiAuthentication(configuration);
+//builder.Services.AddAuthorization().AddKeycloakAuthorization(configuration);
+
 var app = builder.Build();
 
 app.MapOpenApi();
 app.MapScalarApiReference();
 
 app.MapDefaultEndpoints();
+
+app.UseHttpsRedirection();
 
 app.UseCors(x=>x.AllowAnyHeader()
 .AllowCredentials()
@@ -49,9 +67,16 @@ app.UseCors(x=>x.AllowAnyHeader()
 
 app.RegisterRoutes();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseResponseCompression();
+
 app.UseExceptionHandler();
 
-app.MapControllers().RequireRateLimiting("fixed");
+app.MapControllers().RequireRateLimiting("fixed").RequireAuthorization();
+
+ExtensionsMiddleware.CreateFirstUser(app);
 
 app.Run();
 

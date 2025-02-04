@@ -1,11 +1,11 @@
-# 2025 Yılı Clean Architecture Setup
+# 2025 YÄ±lÄ± Clean Architecture Setup
 
-Bu repoda, 2025 yılı için projelerimizde başlangıç olarak kullanabileceğiniz modern ve modüler bir Clean Architecture yapısı sunulmaktadır.
+Bu repoda, 2025 yÄ±lÄ± iÃ§in projelerimizde baÅŸlangÄ±Ã§ olarak kullanabileceÄŸiniz modern ve modÃ¼ler bir Clean Architecture yapÄ±sÄ± sunulmaktadÄ±r.
 
 
-## Proje İçeriği
+## Proje Ä°Ã§eriÄŸi
 
-### Mimari Yapı
+### Mimari YapÄ±
 - **Architectural Pattern**: Clean Architecture
 - **Design Patterns**:
   - Result Pattern
@@ -13,12 +13,18 @@ Bu repoda, 2025 yılı için projelerimizde başlangıç olarak kullanabileceğiniz mod
   - CQRS Pattern
   - UnitOfWork Pattern
 
-### Kullanılan Kütüphaneler
-- **MediatR**: CQRS ve mesajlaşma işlemleri için.
-- **TS.Result**: Standart sonuç modellemeleri için.
-- **Mapster**: Nesne eşlemeleri için.
-- **FluentValidation**: Doğrulama işlemleri için.
-- **TS.EntityFrameworkCore.GenericRepository**: Genel amaçlı repository işlemleri için.
-- **EntityFrameworkCore**: ORM (Object-Relational Mapping) için.
-- **OData**: Sorgulama ve veri erişiminde esneklik sağlamak için.
-- **Scrutor**: Dependency Injection yönetimi ve dinamik servis kaydı için.
+### KullanÄ±lan KÃ¼tÃ¼phaneler
+- **MediatR**: CQRS ve mesajlaÅŸma iÅŸlemleri iÃ§in.
+- **TS.Result**: Standart sonuÃ§ modellemeleri iÃ§in.
+- **Mapster**: Nesne eÅŸlemeleri iÃ§in.
+- **FluentValidation**: DoÄŸrulama iÅŸlemleri iÃ§in.
+- **TS.EntityFrameworkCore.GenericRepository**: Genel amaÃ§lÄ± repository iÅŸlemleri iÃ§in.
+- **EntityFrameworkCore**: ORM (Object-Relational Mapping) iÃ§in.
+- **OData**: Sorgulama ve veri eriÅŸiminde esneklik saÄŸlamak iÃ§in.
+- **Scrutor**: Dependency Injection yÃ¶netimi ve dinamik servis kaydÄ± iÃ§in.
+
+
+**Keycloak Docker Kodu**:
+   ```bash
+    docker run -d --name keycloak -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:25.0.2 start-dev
+   ```
